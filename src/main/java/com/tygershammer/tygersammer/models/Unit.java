@@ -1,27 +1,31 @@
 package com.tygershammer.tygersammer.models;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 public class Unit {
     @Id @GeneratedValue
     private Long id;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String name;
+    @OneToMany(mappedBy = "unit")
+    private Collection<UnitReview> unitReview;
 
     public Unit(){}
 
-    public Unit(String name){
+    public Unit(String name) {
         this.name = name;
+    }
+
+    public Unit(String name, Collection<UnitReview> unitReview) {
+        this.name = name;
+        this.unitReview = unitReview;
     }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -32,17 +36,25 @@ public class Unit {
         this.name = name;
     }
 
+    public Collection<UnitReview> getUnitReview() {
+        return unitReview;
+    }
+
+    public void setUnitReview(Collection<UnitReview> unitReview) {
+        this.unitReview = unitReview;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Unit)) return false;
         Unit unit = (Unit) o;
-        return id.equals(unit.id) && name.equals(unit.name);
+        return getName().equals(unit.getName()) && Objects.equals(getUnitReview(), unit.getUnitReview());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(getName(), getUnitReview());
     }
 
     @Override
@@ -50,6 +62,7 @@ public class Unit {
         return "Unit{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", unitReview=" + unitReview +
                 '}';
     }
 }
