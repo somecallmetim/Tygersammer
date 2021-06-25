@@ -3,6 +3,7 @@ package com.tygershammer.tygersammer.models;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Unit {
@@ -10,8 +11,15 @@ public class Unit {
     private Long id;
     @Column(unique = true, nullable = false)
     private String name;
+
     @OneToMany(mappedBy = "unit")
-    private Collection<UnitReview> unitReview;
+    private Collection<UnitReview> unitReviews;
+
+    @ManyToMany
+    @JoinTable(name = "unit_hashtag",
+            joinColumns = @JoinColumn(name = "unit_id"),
+            inverseJoinColumns = @JoinColumn(name = "hashtag_id"))
+    private Set<Hashtag> hashtags;
 
     public Unit(){}
 
@@ -19,9 +27,9 @@ public class Unit {
         this.name = name;
     }
 
-    public Unit(String name, Collection<UnitReview> unitReview) {
+    public Unit(String name, Collection<UnitReview> unitReviews, Set<Hashtag> hashtags) {
         this.name = name;
-        this.unitReview = unitReview;
+        this.unitReviews = unitReviews;
     }
 
     public Long getId() {
@@ -36,12 +44,20 @@ public class Unit {
         this.name = name;
     }
 
-    public Collection<UnitReview> getUnitReview() {
-        return unitReview;
+    public Collection<UnitReview> getUnitReviews() {
+        return unitReviews;
     }
 
-    public void setUnitReview(Collection<UnitReview> unitReview) {
-        this.unitReview = unitReview;
+    public void setUnitReviews(Collection<UnitReview> unitReviews) {
+        this.unitReviews = unitReviews;
+    }
+
+    public Set<Hashtag> getHashtags() {
+        return hashtags;
+    }
+
+    public void setHashtags(Set<Hashtag> hashtags) {
+        this.hashtags = hashtags;
     }
 
     @Override
@@ -49,12 +65,12 @@ public class Unit {
         if (this == o) return true;
         if (!(o instanceof Unit)) return false;
         Unit unit = (Unit) o;
-        return getName().equals(unit.getName()) && Objects.equals(getUnitReview(), unit.getUnitReview());
+        return getName().equals(unit.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getUnitReview());
+        return Objects.hash(getName());
     }
 
     @Override
@@ -62,7 +78,8 @@ public class Unit {
         return "Unit{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", unitReview=" + unitReview +
+                ", unitReviews=" + unitReviews.toString() +
+                ", hashtags=" + hashtags.toString() +
                 '}';
     }
 }
