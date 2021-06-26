@@ -5,8 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-<ul th:each="unit:${units}">
-    <li th:text="${unit.name}"></li>
+<ul>
+    <a th:each="unit:${units}" th:href="@{'/unit/' + ${unit.name} + '/'}"><li th:text="${unit.name}"></li></a>
 </ul>
 </body>
 </html>

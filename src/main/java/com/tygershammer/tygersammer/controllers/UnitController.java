@@ -1,7 +1,7 @@
 package com.tygershammer.tygersammer.controllers;
 
 import com.tygershammer.tygersammer.models.Unit;
-import com.tygershammer.tygersammer.repos.UnitRepository;
+import com.tygershammer.tygersammer.repos.UnitRepoInterface;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class UnitController {
 
-    private UnitRepository unitRepository;
+    private UnitRepoInterface unitRepoInterface;
 
-    public UnitController(UnitRepository unitRepository){
-        this.unitRepository = unitRepository;
+    public UnitController(UnitRepoInterface unitRepoInterface){
+        this.unitRepoInterface = unitRepoInterface;
     }
 
     @GetMapping("/new")
@@ -24,16 +24,22 @@ public class UnitController {
     @PostMapping("/new")
     public String createNewUnit(@RequestParam String name){
         Unit unit = new Unit(name);
-        unitRepository.save(unit);
+        unitRepoInterface.save(unit);
         System.out.println(unit.getName());
         return "home";
     }
 
     @GetMapping("/displayAllUnits")
     public String displayAllUnits(Model model){
-        Iterable<Unit> allUnits = unitRepository.findAll();
+        Iterable<Unit> allUnits = unitRepoInterface.findAll();
         model.addAttribute("units", allUnits);
         return "displayAllUnits";
     }
 
+    @GetMapping("/{name}")
+    public String getUnitByName(Model model, @PathVariable String name){
+        Unit unit = unitRepoInterface.findByName(name);
+        model.addAttribute(unit);
+        return "getUnitByName";
+    }
 }
