@@ -3,6 +3,7 @@ package com.tygershammer.tygersammer.controllers;
 import com.tygershammer.tygersammer.models.Unit;
 import com.tygershammer.tygersammer.repos.UnitRepository;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/unit")
@@ -26,6 +27,13 @@ public class UnitController {
         unitRepository.save(unit);
         System.out.println(unit.getName());
         return "home";
+    }
+
+    @GetMapping("/displayAllUnits")
+    public String displayAllUnits(Model model){
+        Iterable<Unit> allUnits = unitRepository.findAll();
+        model.addAttribute("units", allUnits);
+        return "displayAllUnits";
     }
 
 }
