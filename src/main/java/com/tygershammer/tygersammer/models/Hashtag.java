@@ -1,6 +1,7 @@
 package com.tygershammer.tygersammer.models;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 
@@ -13,17 +14,13 @@ public class Hashtag {
     String hashtag;
 
     @ManyToMany(mappedBy = "hashtags")
-    Set<Unit> units;
+    Set<Unit> units = new HashSet<Unit>();
 
     protected Hashtag(){}
 
-    public Hashtag(String hashtag) {
+    public Hashtag(String hashtag, Unit unit) {
         this.hashtag = hashtag;
-    }
-
-    public Hashtag(String hashtag, Set<Unit> units) {
-        this.hashtag = hashtag;
-        this.units = units;
+        units.add(unit);
     }
 
     public Long getId() {

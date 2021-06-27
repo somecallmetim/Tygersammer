@@ -1,7 +1,9 @@
 package com.tygershammer.tygersammer.controllers;
 
+import com.tygershammer.tygersammer.models.Hashtag;
 import com.tygershammer.tygersammer.models.Unit;
 import com.tygershammer.tygersammer.models.UnitReview;
+import com.tygershammer.tygersammer.repos.HashtagRepoInterface;
 import com.tygershammer.tygersammer.repos.UnitRepoInterface;
 import com.tygershammer.tygersammer.repos.UnitReviewRepoInterface;
 import org.springframework.stereotype.Controller;
@@ -15,10 +17,13 @@ public class UnitController {
 
     private UnitRepoInterface unitRepoInterface;
     private UnitReviewRepoInterface unitReviewRepoInterface;
+    private HashtagRepoInterface hashtagRepoInterface;
 
-    public UnitController(UnitRepoInterface unitRepoInterface, UnitReviewRepoInterface unitReviewRepoInterface){
+    public UnitController(UnitRepoInterface unitRepoInterface, UnitReviewRepoInterface unitReviewRepoInterface,
+                          HashtagRepoInterface hashtagRepoInterface){
         this.unitRepoInterface = unitRepoInterface;
         this.unitReviewRepoInterface = unitReviewRepoInterface;
+        this.hashtagRepoInterface = hashtagRepoInterface;
     }
 
     @GetMapping("/new")
@@ -53,6 +58,17 @@ public class UnitController {
         Unit unit = unitRepoInterface.findByName(name);
         UnitReview unitReview = new UnitReview(review, unit);
         unitReviewRepoInterface.save(unitReview);
+        modelMap.addAttribute(unit);
+        return "getUnitByName";
+    }
+
+    @PostMapping("/{name}/addHashtag")
+    public String addHashtag(@PathVariable String name, @RequestParam String hashtag, ModelMap modelMap){
+        Unit unit = unitRepoInterface.findByName(name);
+        Hashtag hashtagObject = hashtagRepoInterface.findByHashtag(hashtag).orElseGet(() -> new Hashtag(hashtag, unit));
+        hashtagRepoInterface.save(hashtagObject);
+        unit.addHashtag(hashtagObject);
+        unitRepoInterface.save(unit);
         modelMap.addAttribute(unit);
         return "getUnitByName";
     }

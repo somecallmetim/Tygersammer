@@ -2,6 +2,7 @@ package com.tygershammer.tygersammer.models;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ public class Unit {
     @JoinTable(name = "unit_hashtag",
             joinColumns = @JoinColumn(name = "unit_id"),
             inverseJoinColumns = @JoinColumn(name = "hashtag_id"))
-    private Set<Hashtag> hashtags;
+    private Set<Hashtag> hashtags = new HashSet<Hashtag>();
 
     public Unit(){}
 
@@ -58,6 +59,10 @@ public class Unit {
 
     public void setHashtags(Set<Hashtag> hashtags) {
         this.hashtags = hashtags;
+    }
+
+    public void addHashtag(Hashtag hashtag){
+        hashtags.add(hashtag);
     }
 
     @Override
