@@ -2,9 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>${unit.name}</title>
+    <title th:text="${unit.name}"></title>
 </head>
 <body>
     <h1 th:text="${unit.name}"></h1>
+    <!--    ToDo Display hashtags and reviews -->
+
+    <h2>Reviews</h2>
+    <ul>
+        <li th:each="review:${unit.unitReviews}"  th:text="${review.reviewText}"></li>
+    </ul>
+
+    <form th:action="@{/unit/{unitName}/addReview/(unitName=${unit.name})}" method="POST">
+        <label for="review">Your review:</label><br>
+        <textarea id="review" name="review"></textarea><br>
+        <input type="submit" value="Submit">
+    </form>
 </body>
 </html>
