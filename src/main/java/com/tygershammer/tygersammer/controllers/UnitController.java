@@ -36,7 +36,7 @@ public class UnitController {
         Unit unit = new Unit(name);
         unitRepoInterface.save(unit);
         System.out.println(unit.getName());
-        return "home";
+        return "redirect:/unit/displayAllUnits";
     }
 
     @GetMapping("/displayAllUnits")
@@ -59,7 +59,7 @@ public class UnitController {
         UnitReview unitReview = new UnitReview(review, unit);
         unitReviewRepoInterface.save(unitReview);
         modelMap.addAttribute(unit);
-        return "getUnitByName";
+        return "redirect:/unit/" + name;
     }
 
     @PostMapping("/{name}/addHashtag")
@@ -70,6 +70,6 @@ public class UnitController {
         unit.addHashtag(hashtagObject);
         unitRepoInterface.save(unit);
         modelMap.addAttribute(unit);
-        return "getUnitByName";
+        return "redirect:/unit/" + name;
     }
 }
