@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
-<body>
-    <h1>Home Page</h1>
-</body>
+<div th:replace="fragments/main::head"></div>
+    <body>
+        <div th:replace="fragments/main::navbar"></div>
+        <div class="container">
+            <br>
+            <h1>Home Page</h1>
+        </div>
+        <div th:replace="fragments/main::bootstrap_js"></div>
+    </body>
 </html>

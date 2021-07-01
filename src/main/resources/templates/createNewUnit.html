@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Create New Unit</title>
-</head>
-<body>
-    <h1>test</h1>
-    <form action="/unit/new" method="POST">
-        <label for="name">First name:</label><br>
-        <input type="text" id="name" name="name"><br>
-        <input type="submit" value="Submit">
-    </form>
-</body>
+    <div th:replace="fragments/main::head"></div>
+    <body>
+        <div th:replace="fragments/main::navbar"></div>
+        <div class="container">
+            <h1>Create New Unit</h1>
+            <form action="/unit/new" method="POST">
+                <label for="name">Unit name:</label><br>
+                <input type="text" id="name" name="name"><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+        <div th:replace="fragments/main::bootstrap_js"></div>
+    </body>
 </html>

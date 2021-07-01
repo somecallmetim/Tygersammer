@@ -1,33 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title th:text="${unit.name}"></title>
-</head>
-<body>
-    <h1 th:text="${unit.name}"></h1>
-    <!-- ToDo Display hashtags -->
+    <div th:replace="fragments/main::head"></div>
+    <body>
+        <div th:replace="fragments/main::navbar"></div>
+        <div class="container">
+            <br>
+            <h1 th:text="${unit.name}"></h1>
 
-    <h2>Reviews</h2>
-    <ul>
-        <li th:each="review:${unit.unitReviews}"  th:text="${review.reviewText}"></li>
-    </ul>
+            <h2>Reviews</h2>
+            <ul>
+                <li th:each="review:${unit.unitReviews}"  th:text="${review.reviewText}"></li>
+            </ul>
 
-    <h2>Hashtags</h2>
-    <ul>
-        <li th:each="hashtag:${unit.hashtags}"  th:text="${hashtag.hashtag}"></li>
-    </ul>
+            <h2>Hashtags</h2>
+            <ul>
+                <li th:each="hashtag:${unit.hashtags}"  th:text="${hashtag.hashtag}"></li>
+            </ul>
 
-    <form th:action="@{/unit/{unitName}/addReview/(unitName=${unit.name})}" method="POST">
-        <label for="review">Your review:</label><br>
-        <textarea id="review" name="review"></textarea><br>
-        <input type="submit" value="Submit">
-    </form>
+            <form th:action="@{/unit/{unitName}/addReview/(unitName=${unit.name})}" method="POST">
+                <label for="review">Your review:</label><br>
+                <textarea id="review" name="review"></textarea><br>
+                <input type="submit" value="Submit">
+            </form>
 
-    <form th:action="@{/unit/{unitName}/addHashtag/(unitName=${unit.name})}" method="POST">
-        <label for="hashtag">Add Hashtag:</label><br>
-        <textarea id="hashtag" name="hashtag"></textarea><br>
-        <input type="submit" value="Submit">
-    </form>
-</body>
+            <form th:action="@{/unit/{unitName}/addHashtag/(unitName=${unit.name})}" method="POST">
+                <label for="hashtag">Add Hashtag:</label><br>
+                <textarea id="hashtag" name="hashtag"></textarea><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+        <div th:replace="fragments/main::bootstrap_js"></div>
+    </body>
 </html>
