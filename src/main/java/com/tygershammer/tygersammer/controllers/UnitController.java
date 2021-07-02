@@ -105,7 +105,6 @@ public class UnitController {
    @GetMapping("/deleteHashtag/{hashtagId}/{unitName}")
    public String deleteHashtag(@PathVariable Long hashtagId, @PathVariable String unitName, Model model){
         Unit unit = unitRepoInterface.findByName(unitName);
-//        hashtagRepoInterface.delete(hashtagRepoInterface.findById(hashtagId).get());
         Hashtag hashtagObject = hashtagRepoInterface.findById(hashtagId).get();
         hashtagObject.removeUnit(unit);
         if(hashtagObject.checkIfUnitsSetEmpty()){
@@ -116,4 +115,20 @@ public class UnitController {
         model.addAttribute(unit);
         return "redirect:/unit/" + unitName;
    }
+
+    @GetMapping("/displayAllHashtags")
+    public String displayAllHashtagas(Model model){
+       Iterable<Hashtag> allHashtags = hashtagRepoInterface.findAll();
+       model.addAttribute("hashtags", allHashtags);
+       return "displayAllHashtags";
+    }
+
+    @GetMapping("/displayUnitsByHashtag/{hashtagId}")
+    public String displayUnitsByHashtag(@PathVariable Long hashtagId, Model model){
+        Hashtag hashtag = hashtagRepoInterface.findById(hashtagId).get();
+        Iterable<Unit> allUnits = hashtag.getUnits();
+        model.addAttribute("units", allUnits);
+        return "allUnitsByHashtag";
+    }
+
 }

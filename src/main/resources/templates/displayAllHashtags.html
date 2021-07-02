@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<div th:replace="fragments/main::head"></div>
+<body>
+<div th:replace="fragments/main::navbar"></div>
+<h2 class="text-center">Hashtags</h2>
+<div class="container">
+    <div class="row" style='border-bottom:1px solid #ccc;' th:each="hashtag:${hashtags}">
+        <div class="col text-center">
+            <a  th:href="@{'/unit/displayUnitsByHashtag/' + ${hashtag.id} + '/'}" th:text="${hashtag.hashtag}"></a>
+        </div>
+    </div>
+</div>
+<br>
+<div th:replace="fragments/main::bootstrap_js"></div>
+</body>
+</html>
