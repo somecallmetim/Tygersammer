@@ -44,6 +44,12 @@ public class UnitController {
     @GetMapping("/deleteUnit/{unitId}")
     public String deleteUnit(@PathVariable("unitId") long unitId, Model model){
         Unit unit = unitRepoInterface.findById(unitId).get();
+        for(Hashtag hashtag : unit.getHashtags()){
+            hashtag.removeUnit(unit);
+            if(hashtag.checkIfUnitsSetEmpty()){
+                hashtagRepoInterface.delete(hashtag);
+            }
+        }
         unitRepoInterface.delete(unit);
         Iterable<Unit> allUnits = unitRepoInterface.findAll();
         model.addAttribute("units", allUnits);

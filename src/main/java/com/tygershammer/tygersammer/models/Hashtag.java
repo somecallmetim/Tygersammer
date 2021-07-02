@@ -14,7 +14,7 @@ public class Hashtag {
     String hashtag;
 
     @ManyToMany
-    @JoinTable(name = "hastag_unit",
+    @JoinTable(name = "hashtag_unit",
             joinColumns = @JoinColumn(name = "hashtag_id"),
             inverseJoinColumns = @JoinColumn(name = "unit_id"))
     Set<Unit> units = new HashSet<Unit>();
