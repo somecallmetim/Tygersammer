@@ -13,8 +13,8 @@
                 <div class="row" style='border-bottom:1px solid #ccc;' th:each="review:${unit.unitReviews}">
                     <div class="col text-center" th:text="${review.reviewText}"></div>
                     <div class="col text-center">
-                        <a th:href="@{/unit/deleteReview/{reviewId}/{unitName}(reviewId=${review.id}, unitName=${unit.name})}">delete
-                    </a></div>
+                        <a th:href="@{/unit/deleteReview/{reviewId}/{unitName}(reviewId=${review.id}, unitName=${unit.name})}">delete</a>
+                    </div>
                 </div>
             </div>
             <br>
@@ -29,7 +29,11 @@
             <div class="container">
                 <div class="row" style='border-bottom:1px solid #ccc;' th:each="hashtag:${unit.hashtags}" >
                     <div class="col text-center" th:text="${hashtag.hashtag}"></div>
-                    <div class="col text-center"><a href="#">delete</a></div>
+                    <div class="col text-center">
+                        <a th:href="@{/unit/deleteHashtag/{hashtagId}/{unitName}(hashtagId=${hashtag.id}, unitName=${unit.name})}">
+                            delete
+                        </a>
+                    </div>
                 </div>
             </div>
             <br>

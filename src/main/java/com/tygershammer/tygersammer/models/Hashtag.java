@@ -13,7 +13,10 @@ public class Hashtag {
     @Column(unique = true, nullable = false)
     String hashtag;
 
-    @ManyToMany(mappedBy = "hashtags")
+    @ManyToMany
+    @JoinTable(name = "hastag_unit",
+            joinColumns = @JoinColumn(name = "hashtag_id"),
+            inverseJoinColumns = @JoinColumn(name = "unit_id"))
     Set<Unit> units = new HashSet<Unit>();
 
     protected Hashtag(){}
@@ -42,6 +45,14 @@ public class Hashtag {
     public void setUnits(Set<Unit> units) {
         this.units = units;
     }
+
+    public void addUnit(Unit unit){this.units.add(unit);}
+
+    public void removeUnit(Unit unit){this.units.remove(unit);}
+
+    public boolean checkIfUnitInSet(Unit unit){return this.units.contains(unit);}
+
+    public boolean checkIfUnitsSetEmpty(){return this.units.isEmpty();}
 
     @Override
     public boolean equals(Object o) {

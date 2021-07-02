@@ -16,10 +16,7 @@ public class Unit {
     @OneToMany(mappedBy = "unit", orphanRemoval = true, cascade = CascadeType.REMOVE)
     private Collection<UnitReview> unitReviews;
 
-    @ManyToMany
-    @JoinTable(name = "unit_hashtag",
-            joinColumns = @JoinColumn(name = "unit_id"),
-            inverseJoinColumns = @JoinColumn(name = "hashtag_id"))
+    @ManyToMany(mappedBy = "units")
     private Set<Hashtag> hashtags = new HashSet<Hashtag>();
 
     public Unit(){}
@@ -70,12 +67,12 @@ public class Unit {
         if (this == o) return true;
         if (!(o instanceof Unit)) return false;
         Unit unit = (Unit) o;
-        return getName().equals(unit.getName());
+        return getId().equals(unit.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName());
+        return Objects.hash(getId());
     }
 
     @Override
@@ -83,8 +80,6 @@ public class Unit {
         return "Unit{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", unitReviews=" + unitReviews.toString() +
-                ", hashtags=" + hashtags.toString() +
                 '}';
     }
 }

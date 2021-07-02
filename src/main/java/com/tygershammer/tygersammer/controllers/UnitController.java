@@ -89,13 +89,31 @@ public class UnitController {
     }
 
     @PostMapping("/{name}/addHashtag")
-    public String addHashtag(@PathVariable String name, @RequestParam String hashtag, ModelMap modelMap){
+    public String addHashtag(@PathVariable String name, @RequestParam String hashtag, Model model){
         Unit unit = unitRepoInterface.findByName(name);
         Hashtag hashtagObject = hashtagRepoInterface.findByHashtag(hashtag).orElseGet(() -> new Hashtag(hashtag, unit));
+        if(!hashtagObject.checkIfUnitInSet(unit)){
+            hashtagObject.addUnit(unit);
+        }
         hashtagRepoInterface.save(hashtagObject);
         unit.addHashtag(hashtagObject);
         unitRepoInterface.save(unit);
-        modelMap.addAttribute(unit);
+        model.addAttribute(unit);
         return "redirect:/unit/" + name;
     }
+
+   @GetMapping("/deleteHashtag/{hashtagId}/{unitName}")
+   public String deleteHashtag(@PathVariable Long hashtagId, @PathVariable String unitName, Model model){
+        Unit unit = unitRepoInterface.findByName(unitName);
+//        hashtagRepoInterface.delete(hashtagRepoInterface.findById(hashtagId).get());
+        Hashtag hashtagObject = hashtagRepoInterface.findById(hashtagId).get();
+        hashtagObject.removeUnit(unit);
+        if(hashtagObject.checkIfUnitsSetEmpty()){
+            hashtagRepoInterface.delete(hashtagObject);
+        }else {
+            hashtagRepoInterface.save(hashtagObject);
+        }
+        model.addAttribute(unit);
+        return "redirect:/unit/" + unitName;
+   }
 }
