@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RequestMapping("/unit")
 @Controller
 public class UnitController {
@@ -60,6 +62,21 @@ public class UnitController {
         unitReviewRepoInterface.save(unitReview);
         modelMap.addAttribute(unit);
         return "redirect:/unit/" + name;
+    }
+
+    @GetMapping("/deleteReview/{reviewId}/{unitName}")
+    public String deleteReview(@PathVariable("reviewId") long reviewId,
+                               @PathVariable("unitName") String unitName, Model model){
+
+        // unitReviewRepoInterface returns an Optional<UnitReview>. The 'get' function for that class will get us the
+            // actual UnitReview object we want
+        UnitReview unitReview = unitReviewRepoInterface.findById(reviewId).get();
+        unitReviewRepoInterface.delete(unitReview);
+
+        Unit unit = unitRepoInterface.findByName(unitName);
+
+        model.addAttribute(unit);
+        return "redirect:/unit/" + unitName;
     }
 
     @PostMapping("/{name}/addHashtag")
