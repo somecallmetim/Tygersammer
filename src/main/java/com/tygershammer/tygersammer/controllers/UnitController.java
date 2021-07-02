@@ -35,9 +35,9 @@ public class UnitController {
 
     @PostMapping("/new")
     public String createNewUnit(@RequestParam String name){
+        name = name.trim();
         Unit unit = new Unit(name);
         unitRepoInterface.save(unit);
-        System.out.println(unit.getName());
         return "redirect:/unit/displayAllUnits";
     }
 
