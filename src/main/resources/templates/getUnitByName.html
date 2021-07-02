@@ -11,8 +11,8 @@
             <h2 class="text-center">Reviews</h2>
             <div class="container">
                 <div class="row" style='border-bottom:1px solid #ccc;' th:each="review:${unit.unitReviews}">
-                    <div class="col" th:text="${review.reviewText}"></div>
-                    <div class="col">
+                    <div class="col text-center" th:text="${review.reviewText}"></div>
+                    <div class="col text-center">
                         <a th:href="@{/unit/deleteReview/{reviewId}/{unitName}(reviewId=${review.id}, unitName=${unit.name})}">delete
                     </a></div>
                 </div>
@@ -28,7 +28,8 @@
             <h2 class="text-center">Hashtags</h2>
             <div class="container">
                 <div class="row" style='border-bottom:1px solid #ccc;' th:each="hashtag:${unit.hashtags}" >
-                    <div class="col" th:text="${hashtag.hashtag}"></div> <div class="col"><a href="#">delete</a></div>
+                    <div class="col text-center" th:text="${hashtag.hashtag}"></div>
+                    <div class="col text-center"><a href="#">delete</a></div>
                 </div>
             </div>
             <br>

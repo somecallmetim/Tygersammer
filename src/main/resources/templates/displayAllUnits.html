@@ -6,10 +6,10 @@
                 <h2 class="text-center">Units</h2>
                 <div class="container">
                     <div class="row" style='border-bottom:1px solid #ccc;' th:each="unit:${units}">
-                        <div class="col">
+                        <div class="col text-center">
                             <a  th:href="@{'/unit/' + ${unit.name} + '/'}" th:text="${unit.name}"></a>
                         </div>
-                        <div class="col">
+                        <div class="col text-center">
                             <a th:href="@{/unit/deleteUnit/{unitId}(unitId=${unit.id})}">delete</a></div>
                     </div>
                 </div>
