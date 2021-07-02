@@ -3,13 +3,17 @@
     <div th:replace="fragments/main::head"></div>
         <body>
             <div th:replace="fragments/main::navbar"></div>
-            <div class="container">
-                <ul>
-                    <a th:each="unit:${units}" th:href="@{'/unit/' + ${unit.name} + '/'}">
-                        <li th:text="${unit.name}"></li>
-                    </a>
-                </ul>
-            </div>
+                <h2 class="text-center">Units</h2>
+                <div class="container">
+                    <div class="row" style='border-bottom:1px solid #ccc;' th:each="unit:${units}">
+                        <div class="col">
+                            <a  th:href="@{'/unit/' + ${unit.name} + '/'}" th:text="${unit.name}"></a>
+                        </div>
+                        <div class="col">
+                            <a th:href="@{/unit/deleteUnit/{unitId}(unitId=${unit.id})}">delete</a></div>
+                    </div>
+                </div>
+                <br>
             <div th:replace="fragments/main::bootstrap_js"></div>
         </body>
 </html>

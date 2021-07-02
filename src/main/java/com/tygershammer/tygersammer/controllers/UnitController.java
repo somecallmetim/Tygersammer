@@ -41,6 +41,15 @@ public class UnitController {
         return "redirect:/unit/displayAllUnits";
     }
 
+    @GetMapping("/deleteUnit/{unitId}")
+    public String deleteUnit(@PathVariable("unitId") long unitId, Model model){
+        Unit unit = unitRepoInterface.findById(unitId).get();
+        unitRepoInterface.delete(unit);
+        Iterable<Unit> allUnits = unitRepoInterface.findAll();
+        model.addAttribute("units", allUnits);
+        return "redirect:/unit/displayAllUnits";
+    }
+
     @GetMapping("/displayAllUnits")
     public String displayAllUnits(Model model){
         Iterable<Unit> allUnits = unitRepoInterface.findAll();

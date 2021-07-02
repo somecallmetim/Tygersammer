@@ -13,7 +13,7 @@ public class Unit {
     @Column(unique = true, nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "unit")
+    @OneToMany(mappedBy = "unit", orphanRemoval = true, cascade = CascadeType.REMOVE)
     private Collection<UnitReview> unitReviews;
 
     @ManyToMany
